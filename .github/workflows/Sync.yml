@@ -1,0 +1,20 @@
+name: Sync Fork
+
+on:
+  schedule:
+    - cron: '0 0 * * *' # Executa todo dia à meia-noite (UTC)
+  workflow_dispatch: # Permite rodar manualmente pelo site do GitHub
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      
+      - name: Sincronizar com o upstream
+        uses: repo-sync/github-sync@v2
+        with:
+          source_repo: "https://github.com/melgarafael/DeskcommCRM"
+          source_branch: "main"
+          destination_branch: "main"
+          github_token: ${{ secrets.GITHUB_TOKEN }}
